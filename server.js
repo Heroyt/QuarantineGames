@@ -49,14 +49,15 @@ io.on('connection', socket => {
 
 	// Log player out
 	socket.on('logout', id => {
-		users.delete(id);
+		users.delete(parseInt(id));
 		console.log(`User (${id}) logged out`);
 	});
 
 	// Update player
-	socket.on('updateUserData', (id, key, value) => {
-		const user = Users.get(id);
+	socket.on('updateUserData', ([id, key, value]) => {
+		const user = Users.get(parseInt(id));
 		user[key] = value;
+		console.log(`Updating user's (${id}) ${key} to ${value}`)
 	});
 
 	socket.on('disconnect', () => {
